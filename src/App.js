@@ -7,12 +7,13 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-       <Header/>
+      <Header />
       {/*<Card/> */}
-    
+
       <Routes>
-      <Route path="/home" element={<Home/>}/>
-        <Route path="/cart" element={<Cart/>}/>
+        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/cart" element={<Cart />} />
       </Routes>
 
     </div>
