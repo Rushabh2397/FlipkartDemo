@@ -29,9 +29,7 @@ const cartReducer = (state, action) => {
                 ...state,
                 cart: state.cart.map(prod=>{
                     if(prod.id===action.payload){
-                        console.log("PROD",prod.qty)
                         prod.qty = parseInt(prod.qty) + 1;
-                        console.log("================PROD",prod.qty)
                     }
                     return prod
                 })

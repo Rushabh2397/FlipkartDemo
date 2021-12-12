@@ -10,15 +10,23 @@ const CartCard = ({ id, prodImg, name, price, discount, qty }) => {
 
     const { dispatchCart } = useCart()
 
-    const removeFromCart = () => {
+    const removeFromCart = (prodQty) => {
+        prodQty = parseInt(prodQty)
         dispatchCart({ type: 'REMOVE_FROM_CART', payload: id })
+        dispatchCart({ type: 'GET_CART_DETAIL', payload: { price:parseInt(price*prodQty) , add: false } })
     }
 
-    const mainpulateQty = ({ action, prodQty }) => {
-      
+    
 
-            prodQty > 1 ? dispatchCart({ type: 'DECREASE_QTY', payload: id }) : removeFromCart()
-            prodQty >= 1 && dispatchCart({ type: 'GET_CART_DETAIL', payload: { price: price, add: false } })
+    const decreaseQty = (prodQty)=>{
+
+        if(prodQty>1){
+            dispatchCart({ type: 'DECREASE_QTY', payload: id })
+            dispatchCart({ type: 'GET_CART_DETAIL', payload: { price: price, add: false } })
+        }else{
+            removeFromCart()
+        }
+
     }
 
     const addQty = () => {
@@ -100,10 +108,10 @@ const CartCard = ({ id, prodImg, name, price, discount, qty }) => {
                 <Box>
                     <span style={{ fontSize: "1rem", marginRight: "0.5rem", cursor: 'pointer' }} onClick={addQty}>+</span>
                     {qty}
-                    <span style={{ marginLeft: "0.5rem", cursor: 'pointer' }} onClick={() => { mainpulateQty({ action: "minus", prodQty: qty }) }}>-</span>
+                    <span style={{ marginLeft: "0.5rem", cursor: 'pointer' }} onClick={() => { decreaseQty( qty) }}>-</span>
                 </Box>
                 <Box sx={{ marginTop: "0.5rem", marginBottom: "0.5rem" }}>
-                    <Button variant="contained" sx={{ padding: "0.8rem 3rem" }} onClick={removeFromCart}>
+                    <Button variant="contained" sx={{ padding: "0.8rem 3rem" }} onClick={()=>{removeFromCart(qty)}}>
                         Remove Prod
             </Button>
                 </Box>
